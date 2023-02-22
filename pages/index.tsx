@@ -29,6 +29,8 @@ const Home: NextPage = () => {
           alt="medium logo"
         />
       </div>
+
+      {/* Posts */}
     </div>
   );
 };
