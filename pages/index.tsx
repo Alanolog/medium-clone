@@ -36,3 +36,17 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = async () => {
+  const query = `*[_type == "post"]{
+    _id,
+    title,
+    author -> {
+      name,
+      image
+    },
+    description,
+    mainImage,
+    slug,
+  }`;
+};
