@@ -1,8 +1,14 @@
 import type { NextPage } from "next";
+import { sanityClient } from "../sanity";
 import Head from "next/head";
 import Header from "../components/Header";
+import { Post } from "../typings";
 
-const Home: NextPage = () => {
+interface IProps {
+  posts: [Post];
+}
+
+const Home: NextPage<IProps> = ({ posts }) => {
   return (
     <div className="max-w-7xl mx-auto">
       <Head>
@@ -49,4 +55,11 @@ export const getServerSideProps = async () => {
     mainImage,
     slug,
   }`;
+
+  const posts = await sanityClient.fetch(query);
+  return {
+    props: {
+      posts,
+    },
+  };
 };
