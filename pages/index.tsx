@@ -1,14 +1,16 @@
 import type { NextPage } from "next";
-import { sanityClient } from "../sanity";
+import { sanityClient, urlFor } from "../sanity";
 import Head from "next/head";
 import Header from "../components/Header";
 import { Post } from "../typings";
+import Link from "next/link";
 
 interface IProps {
   posts: [Post];
 }
 
 const Home: NextPage<IProps> = ({ posts }) => {
+  console.log(posts);
   return (
     <div className="max-w-7xl mx-auto">
       <Head>
@@ -37,6 +39,15 @@ const Home: NextPage<IProps> = ({ posts }) => {
       </div>
 
       {/* Posts */}
+      {posts.map((post) => (
+        <Link key={post._id} href={`/post/${post.slug.current}`}>
+          <div>
+            {post?.mainImage && (
+              <img src={urlFor(post.mainImage).url()!} alt="" />
+            )}
+          </div>
+        </Link>
+      ))}
     </div>
   );
 };
