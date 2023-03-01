@@ -1,9 +1,15 @@
+import { GetStaticProps } from "next";
 import React from "react";
 import Header from "../../components/Header";
 import { sanityClient, urlFor } from "../../sanity";
 import { Post } from "../../typings";
 
-const Post = () => {
+interface Props {
+  post: Post;
+}
+
+const Post = ({ post }: Props) => {
+  console.log(post);
   return (
     <main>
       <Header />
@@ -32,5 +38,34 @@ export const getStaticPaths = async () => {
   return {
     paths,
     fallback: "blocking",
+  };
+};
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const query = `
+    *[_type == "post" && slug.current == $slug][0]{
+        _id,
+        _createdAt,
+        title,
+        author->{
+          name,
+          image
+        },
+        'comments': *[
+         _type == 'comment' &&
+         post._ref == ^._id &&
+         approved == true],
+        description,
+        mainImage,
+        slug,
+        body
+      }
+    `;
+
+  const post = await sanityClient.fetch(query, { slug: params?.slug });
+
+  return {
+    props: {
+      post,
+    },
   };
 };
