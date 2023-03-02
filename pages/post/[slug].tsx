@@ -21,7 +21,7 @@ const Post = ({ post }: Props) => {
       <article className="max-w-3xl mx-auto p-5">
         <h1 className=" text-3xl mt-10 mb-3">{post.title}</h1>
         <h2 className="text-xl font-light">{post.description}</h2>
-        <div>
+        <div className=" flex items-center mt-2 gap-2">
           <img
             className="h-10 w-10 rounded-full object-cover"
             src={urlFor(post.author.image).url()}
@@ -35,7 +35,7 @@ const Post = ({ post }: Props) => {
             - Published at {new Date(post._createdAt).toLocaleDateString()}
           </p>
         </div>
-        <div>
+        <div className=" mt-10">
           <PortableText
             content={post.body}
             dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
@@ -59,6 +59,21 @@ const Post = ({ post }: Props) => {
           />
         </div>
       </article>
+      <hr className=" max-w-lg my-5 mx-auto border border-yellow-500" />
+      <form className="flex flex-col p-5 max-w-2xl mx-auto mb-10 ">
+        <label>
+          <span>Name</span>
+          <input type="text" placeholder="John Doe" />
+        </label>{" "}
+        <label>
+          <span>Email</span>
+          <input type="text" placeholder="xyz@xyz.com" />
+        </label>
+        <label>
+          <span>Name</span>
+          <textarea placeholder="John Doe" rows={8} />
+        </label>
+      </form>
     </main>
   );
 };
