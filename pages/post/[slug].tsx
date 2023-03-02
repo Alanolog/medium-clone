@@ -38,7 +38,6 @@ const Post = ({ post }: Props) => {
         setSubmitted(false);
       });
   };
-  console.log(post);
   return (
     <main className="max-w-7xl mx-auto">
       <Header />
