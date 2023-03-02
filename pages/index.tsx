@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const Home: NextPage<IProps> = ({ posts }) => {
-  console.log(posts);
   return (
     <div className="max-w-7xl mx-auto">
       <Head>
