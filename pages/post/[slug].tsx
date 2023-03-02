@@ -17,6 +17,17 @@ interface Props {
   post: Post;
 }
 
+const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+  fetch("/api/createComment", {
+    method: "POST",
+    body: JSON.stringify(data),
+  })
+    .then(() => {
+      console.log(data);
+    })
+    .catch((err) => console.log(err));
+};
+
 const Post = ({ post }: Props) => {
   const {
     register,
@@ -74,7 +85,10 @@ const Post = ({ post }: Props) => {
         </div>
       </article>
       <hr className=" max-w-lg my-5 mx-auto border border-yellow-500" />
-      <form className="flex flex-col p-5 max-w-2xl mx-auto mb-10 ">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col p-5 max-w-2xl mx-auto mb-10 "
+      >
         <input {...register("_id")} type="hidden" name="_id" value={post._id} />
         <label className=" block mb-5 ">
           <span className=" text-gray-700">Name</span>
@@ -89,13 +103,13 @@ const Post = ({ post }: Props) => {
           <span className=" text-gray-700">Email</span>
           <input
             {...register("email", { required: true })}
-            type="text"
+            type="email"
             placeholder="xyz@xyz.com"
             className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 focus:ring"
           />
         </label>
         <label className=" block mb-5 ">
-          <span className=" text-gray-700">Name</span>
+          <span className=" text-gray-700">Comment</span>
           <textarea
             {...register("comment", { required: true })}
             placeholder="John Doe"
