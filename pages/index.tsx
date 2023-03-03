@@ -49,11 +49,14 @@ const Home: NextPage<IProps> = ({ posts }) => {
                   alt="Post main image"
                 />
               )}
-              <div className=" flex justify-between p-5 bg-white">
+              <div className=" flex justify-between p-5 bg-white h-32 max-h-32">
                 <div>
                   <p className=" text-lg font-bold">{post.title}</p>
                   <p className=" text-xs">
-                    {post.description} by {post.author.name}
+                    {post.description.length > 100
+                      ? `${post.description.slice(0, 99)}...`
+                      : post.description}
+                    <span className="font-bold"> by {post.author.name}</span>
                   </p>
                 </div>
                 <img
